@@ -1,0 +1,529 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wilder Loans & Investment</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
+
+<style>
+
+	section {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        min-height: 50vh;
+        padding: 10rem 9% 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+    .dashboard{
+        min-height: 80vh;
+        padding: 10rem 10% 22rem;
+    }
+
+	.form-container {
+           background: #fff;
+           padding: 20px;
+           border-radius: 10px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           width: 100%;
+           max-width: 500px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+
+        #id_status{
+        	display: none;
+        }
+
+        table { 
+        width: 80%; 
+        border-collapse: collapse;
+        box-shadow: 0 0 3rem black; 
+} 
+
+th, td { 
+    padding: 8px; 
+    border: 1px solid #ddd; 
+} 
+
+@media screen and (max-width: 600px) { 
+table, thead, tbody, th, td, tr { 
+    display: block; 
+    border: 1px solid blue;
+} 
+
+thead tr { 
+    position: absolute; 
+    top: -9999px; 
+    left: -9999px; 
+} 
+
+tr { 
+    margin-bottom: 20px; 
+    border: 1px solid #ddd; 
+} 
+
+td { 
+    border: none; 
+    position: relative; 
+    padding-left: 50%; 
+} 
+
+td:before { 
+    position: absolute; 
+    left: 6px; 
+    content: attr(data-label); 
+    font-weight: bold; } 
+
+} 
+
+.float-container{
+    border: 1px solid red;
+    padding: 10px;
+    width: 70%;
+    box-shadow: 0 0 3rem black;
+}
+
+.float-child{
+    width: 50%;
+    float: left;
+    padding: 10px;
+    border: 1px solid black;
+    font-size: 1.3rem;
+    color: black;
+}
+
+.deposit{
+    min-height: 20vh
+}
+
+.home h2{
+    font-size: 2rem;
+}
+
+.box-invest{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 8px;
+    display: inline-block;
+
+    }
+
+    img{
+        width: 80%;
+        height: 89%;
+        border-radius: 10px;
+    }
+
+.box-invest h3{
+    color: black;
+}
+
+.row:after{
+content:"";
+display:table;
+clear:both;
+}
+
+/* The bar container */
+.bar-container{
+width:100%;
+background-color:#f1f1f1;
+text-align:center;
+color:white;
+}
+
+/* Individual bars */
+.bar-5{
+width:60%;
+height:18px;
+background-color:
+#04AA6D;}
+
+.bar-4{
+width:30%;
+height:18px;
+background-color:#2196F3;}
+
+.bar-3{
+width:10%;
+height:18px;
+background-color:#00bcd4;}
+
+.bar-2{
+width:4%;
+height:18px;
+background-color:#ff9800;}
+
+.bar-1{
+width:15%;
+height:18px;
+background-color:#f44336;}
+
+#id_amount{
+    width: 120px;
+    background-color: #f4f4f4;
+}
+
+#id_coin{
+    width: 120px;
+    background-color: #f4f4f4;
+}
+
+#id_address{
+    width: 120px;
+    background-color: #f4f4f4;
+}
+</style>
+</head>
+
+<body>
+<!-- Header section -->
+<header class="header">
+	<a href="#" class="logo"><i class="fa fa-bank"></i> Wilder Grant & Investment</a>
+	
+	<i class="fas fa-bars" id="menu-icon"></i>
+    <nav class="navbar">
+        <a href="#deposit" class="active">Deposit</a>
+        <a href="#withdrawal">Withdrawal</a>
+        <a href="#invest">Invest</a>
+        <a href="#snd-msg">Send Msg</a>
+    </nav>
+    {% if request.user.is_authenticated %}
+     <p>Welcome: {{request.user.username}} ->  <a href="{% url 'work:logout' %}" style="color:white;">Logout</a></p>
+     {% endif %}
+</header>
+
+
+<section class="deposit" id="deposit">
+    <div style="width:100%;">
+<h4 class="heading" style="color:black">Deposit</h4><br>
+        <table> 
+            {% if request.user.is_authenticated %}
+            <thead style="color: white; background: blue; font-weight: 700; font-size: 1.5rem;"> 
+                <tr>  
+                    <th>User</th> 
+                    <th>Coin</th> 
+                    <th>Amount</th> 
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr> 
+            </thead> 
+
+
+            {% for dep in dep %}
+            <tbody style="color: black; font-size: 1.5rem;"> 
+                <tr> 
+                    <td data-label="User">{{dep.user}}</td> 
+                    <td data-label="Coin">{{dep.coin}}</td> 
+                    <td data-label="Amount">{{dep.amount}}</td> 
+                    <td data-label="Status">{{dep.status}}</td>
+                    <td data-label="Edit"><a href="{% url 'work:deposit_panel' dep.id %}"><i class="fa fa-edit"></i></a></td>
+                   
+
+                     
+                </tr> 
+                
+                <!-- more table rows here --> 
+            </tbody>
+            {% endfor %} 
+            {% endif %}
+        </table> 
+</div>
+</section>
+
+
+<section class="withdrawal" id="withdrawal">
+    <div style="width:100%;">
+<h4 class="heading" style="color:black">Withdrawal</h4><br>
+
+        <table> 
+            {% if request.user.is_authenticated %}
+            <thead style="color: white; background: blue; font-weight: 700; font-size: 1.5rem;"> 
+                <tr>  
+                    <th>User</th> 
+                    <th>Coin</th> 
+                    <th>Amount</th> 
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+
+                </tr> 
+            </thead> 
+
+
+            {% for wit in wit %}
+            <tbody style="color: black; font-size: 1.5rem;"> 
+                <tr> 
+                    <td data-label="User">{{wit.user}}</td> 
+                    <td data-label="Coin">{{wit.coin}}</td> 
+                    <td data-label="Amount">{{wit.amount}}</td>
+                    <td data-label="Address">{{wit.address}}</td> 
+                    <td data-label="Status">{{wit.status}}</td> 
+                    <td data-label="Edit"><a href="{% url 'work:withdrawal_panel' wit.id %}"><i class="fa fa-edit"></i></a></td>
+                </tr> 
+                
+                <!-- more table rows here --> 
+            </tbody>
+            {% endfor %} 
+            {% endif %}
+        </table> 
+    </div>
+
+</section>
+
+          
+<section class="invest" id="invest">
+
+    <div style="width:100%; align-items:center; justify-content:center">
+        <h4 class="heading" style="color:black">Investment</h4><br>
+    {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{message.tag}}">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+    
+    <table> 
+            {% if request.user.is_authenticated %}
+            <thead style="color: white; background: blue; font-weight: 700; font-size: 1.5rem;"> 
+                <tr>  
+                    <th>User</th>  
+                    <th>Amount</th> 
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr> 
+            </thead> 
+
+
+            {% for begin in begin %}
+            <tbody style="color: black; font-size: 1.5rem;"> 
+                <tr> 
+                    <td data-label="User">{{begin.user}}</td>  
+                    <td data-label="Amount">{{begin.amount}}</td> 
+                    <td data-label="Status">{{begin.status}}</td> 
+                    <td data-label="Edit"><a href="{% url 'work:begin_panel' begin.id %}" ><i class="fa fa-edit"></i></a></td>
+                    
+                </tr> 
+                
+                <!-- more table rows here --> 
+            </tbody>
+            {% endfor %} 
+            {% endif %}
+        </table> <br> <br><br><br><br>
+    <!-- </section> -->
+        <!-- </div> -->
+
+        <!-- <section> -->
+        <!-- <div class="promo"> -->
+        <table> 
+            {% if request.user.is_authenticated %}
+            <thead style="color: white; background: blue; font-weight: 700; font-size: 1.5rem;"> 
+                <tr>  
+                    <th>User</th>  
+                    <th>Amount</th> 
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr> 
+            </thead> 
+
+
+            {% for promo in promo %}
+            <tbody style="color: black; font-size: 1.5rem;"> 
+                <tr> 
+                    <td data-label="User">{{promo.user}}</td>  
+                    <td data-label="Amount">{{promo.amount}}</td> 
+                    <td data-label="Status">{{promo.status}}</td> 
+                    <td data-label="Edit"><a href="{% url 'work:promo_panel' promo.id %}"><i class="fa fa-edit"></i></a></td>
+                </tr> 
+                
+                <!-- more table rows here --> 
+            </tbody>
+            {% endfor %} 
+            {% endif %}
+        </table> <br> <br><br><br><br>
+        <!-- </section> -->
+        <!-- </div> -->
+
+
+        <!-- <section> -->
+        <table> 
+            {% if request.user.is_authenticated %}
+            <thead style="color: white; background: blue; font-weight: 700; font-size: 1.5rem;"> 
+                <tr>  
+                    <th>User</th>  
+                    <th>Amount</th> 
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr> 
+            </thead> 
+
+
+            {% for finale in finale %}
+            <tbody style="color: black; font-size: 1.5rem;"> 
+                <tr> 
+                    <td data-label="User">{{finale.user}}</td>  
+                    <td data-label="Amount">{{finale.amount}}</td> 
+                    <td data-label="Status">{{finale.status}}</td> 
+                    <td data-label="Edit"><a href="{% url 'work:finale_panel' finale.id %}"><i class="fa fa-edit"></i></a></td>
+                    
+                </tr> 
+                
+                <!-- more table rows here --> 
+            </tbody>
+            {% endfor %} 
+            {% endif %}
+
+        </table>
+        </div>
+    </div>
+        </section>
+    
+
+
+
+<section class="contact" id="snd-msg">
+    <div>
+    <h4 class="heading" style="color:black">Send Client a Mail</h4>
+        <form action="#">
+        {% csrf_token %}
+        <div class="input-box">
+            {{form.name}}
+            {{form.email}}
+            
+            <!-- <input type="text" placeholder="Full Name">
+            <input type="email" placeholder="Valid Email Address"> -->
+        </div>
+
+
+    
+
+            {{form.message}}
+        <!-- <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea> -->
+        <input type="submit" name="" value="Send Message" class="btn">
+    </form>
+    </div>
+
+</section>
+
+
+
+<!-- footer section -->
+<footer class="footer">
+	<div class="footer-text">
+		<p>Creating an environment for the rich and poor</p>
+	</div>
+
+	<div class="footer-IconTop">
+		<a href="#dashboard"><i class="fa-solid fa-angle-up"></i></a>
+	</div>
+	
+</footer>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript">
+	let menuIcon  = document.querySelector("#menu-icon");
+	let navbar  = document.querySelector(".navbar");
+
+	menuIcon.onclick = () => {
+		menuIcon.classList.toggle("fa-xmark")
+		navbar.classList.toggle('active')
+	}
+
+	let sections = document.querySelectorAll('section');
+	let navLinks = document.querySelectorAll('header nav a');
+
+	window.onscroll = () =>{
+		sections.forEach(sec=>{
+			let top = window.scrollv;
+			let offset = secoffsetTop = 150
+			let height = sec.offsetHeight;
+			let id = sec.getAttribute('id')
+
+			if(top >= offset && top < offset + height){
+				navLinks.forEach.apply(links =>{
+					links.classList.remove("active");
+					document.querySelector("header nav a(href*="+ id + ")").classList.add('active')
+				});
+			};
+		});
+
+
+
+		let header = document.querySelector('header');
+		header.classList.toggle('sticky', window.scrollv > 100);
+
+
+		menuIcon.classList.remove('fa-xmark');
+		navbar.classList.remove('active');
+	}
+
+setTimeout(fade_out, 2000)
+      function fade_out(){
+        $(".alert").fadeOut().empty()
+      };
+
+
+$("#id_amount").attr("placeholder", "Input your amount..");
+$("#id_address").attr("placeholder", "Type in your wallet address)..");
+$(".withdrawMoney #id_amount").attr("placeholder", "Input your amount..");
+
+$("#id_name").attr("placeholder", "Your Full Name..");
+$("#id_email").attr("placeholder", "Your valid email address..");
+$("#id_message").attr("placeholder", "Type in your email message..");
+
+$(document).ready(function(){
+        $('#copy-icon').click(function(){
+            var TexttoCopy = $('#copy-text').text();
+            var TeztArea = $('<textarea>');
+            $('body').append(TeztArea);
+            TeztArea.val(TexttoCopy).select();
+
+            document.execCommand('copy')
+            TeztArea.remove()
+            
+            alert('Your referal links is copied');
+        
+        });
+        });
+
+      
+</script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wilder Grants & Investment</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
+</head>
+
+
+<body>
+
+<div style="font-size:1.2rem; color:white; background:blue;">Wilder Grants & Investment</div> 
+
+<h2 style="color:black"><b>{{subject}}</b></h2>
+
+<div>
+    <h3>Hello, {{user}}</h3>
+</div>
+
+<div><p>
+    You have requested to make a withdrawal of {{amount}} worth of {{coin}}, which is currently {{status}}.. Congratulations!!!"""</p></div>
+
+<div>
+    <h5><b>Best Regards!!!</b></h5>
+    <h5><b>Wilder Team</b></h5>
+</div>
+
+
+<div style="font-size:.7rem; color:white; background:blue;">&copy;Wilder Grants & Investment</div>
+
+</body>
+
+</html>

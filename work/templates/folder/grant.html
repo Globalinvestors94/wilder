@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wilder Loans & Investment</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
+</head>
+
+<body>
+<!-- Header section -->
+<header class="header">
+	<a href="#" class="logo"><i class="fa fa-bank"></i> Wiilder Grants & Investment</a>
+	
+	
+</header>
+<!-- Header section ends -->
+
+<!-- home section -->
+
+<!-- loans section -->
+<section class="loans" id="loans">
+	<h2 class="heading">Choose your type of Grants</h2>
+	<div class="loans-container">
+		<div class="loans-box">
+			<i class="fas fa-bank"></i>
+			<h3>AgriculturalLoan</h3>
+			<p>Agriculture remains the backbone of our economy, providing food, employment, and income for millions. However, many farmers face challenges such as limited access to resources, outdated farming techniques, and the impacts of climate change. The Sustainable Agricultural Development Initiative aims to address these issues by providing grants to support innovative, sustainable farming practices.</p>
+			<a href="{% url 'work:agric' %}" class="btn">Choose Plan</a>
+		</div>
+
+		<div class="loans-box">
+			<i class="fas fa-bank"></i>
+			<h3>Business Loan</h3>
+			<p>Small and medium-sized enterprises (SMEs) are crucial to economic development, job creation, and innovation. However, many businesses face significant barriers to growth, such as limited access to capital, technology, and expertise. The Innovative Business Growth and Sustainability Program aims to address these challenges by providing grants to support the expansion and sustainability of SMEs.</p>
+			<a href="{% url 'work:business' %}" class="btn">Choose Plan</a>
+		</div>
+
+
+
+		<div class="loans-box">
+			<i class="fas fa-bank"></i>
+			<h3>Housing/Assest Loan</h3>
+			<p>Access to affordable housing and essential community assets is vital for the well-being and economic stability of individuals and families. However, many communities face a shortage of affordable housing and lack critical infrastructure and resources. The Affordable Housing and Community Assets Development Program aims to address these issues by providing grants to support the development of affordable housing and community assets.</p>
+			<a href="{% url 'work:business' %}" class="btn">Choose Plan</a>
+		</div>
+	</div>
+	
+</section>
+<!-- loans section ends -->
+
+
+
+
+
+
+
+<!-- footer section -->
+<footer class="footer">
+	<div class="footer-text">
+		<p>Creating an environment for the rich and poor</p>
+	</div>
+
+	<div class="footer-IconTop">
+		<a href="#home"><i class="fa-solid fa-angle-up"></i></a>
+	</div>
+	
+</footer>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript">
+	let menuIcon  = document.querySelector("#menu-icon");
+	let navbar  = document.querySelector(".navbar");
+
+	menuIcon.onclick = () => {
+		menuIcon.classList.toggle("fa-xmark")
+		navbar.classList.toggle('active')
+	}
+
+	let sections = document.querySelectorAll('section');
+	let navLinks = document.querySelectorAll('header nav a');
+
+	window.onscroll = () =>{
+		sections.forEach(sec=>{
+			let top = window.scrollv;
+			let offset = secoffsetTop = 150
+			let height = sec.offsetHeight;
+			let id = sec.getAttribute('id')
+
+			if(top >= offset && top < offset + height){
+				navLinks.forEach.apply(links =>{
+					links.classList.remove("active");
+					document.querySelector("header nav a(href*="+ id + ")").classList.add('active')
+				});
+			};
+		});
+
+
+
+		let header = document.querySelector('header');
+		header.classList.toggle('sticky', window.scrollv > 100);
+
+
+		menuIcon.classList.remove('fa-xmark');
+		navbar.classList.remove('active');
+	}
+</script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+{{subject}}
+
+Hello, Boss
+
+
+    {{first_name}} {{last_name}} with phone number {{phone}} sent a message 
+
+    {{message}}

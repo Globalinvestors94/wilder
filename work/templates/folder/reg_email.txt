@@ -1,0 +1,6 @@
+{{subject}}
+
+Hello, {{username}}
+
+
+    You have sucesfully registered to Wilder Grants & Investment Platform.. Thanks!!!

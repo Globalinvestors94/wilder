@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wilder Loans & Investment</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
+
+<style>
+
+	section {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 170vh;
+        }
+
+	.form-container {
+           background: #fff;
+           padding: 20px;
+           border-radius: 10px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           width: 100%;
+           max-width: 500px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+
+    
+    	#id_coin{
+    		display: none;
+    	}
+
+    	input[type=number]{
+    		display: none;
+    	}
+
+    	#id_status{
+    		border: 1px solid black;
+    		border-radius: 10px;
+    		width: 80%;
+    		height: 30px;
+    	}
+
+        @media(max-width:768px){
+            section {
+            height: 250vh;
+        }
+
+        }
+</style>
+</head>
+
+<body>
+<!-- Header section -->
+<header class="header">
+	<a href="#" class="logo"><i class="fa fa-bank"></i> Wilder Grants & Investment</a>
+	
+	
+</header>
+
+<section>
+<div style="color: black; width: 90%; font-size: 1.3rem; padding: 5px;">
+<h1><b>About Wilder Loans & Investment</b></h1>
+<p style="line-height: 20px;">Welcome to Wilder Grants & Investment, your trusted partner in financial growth and stability. At Wilder Loans & Investment, we specialize in providing tailored grants solutions and investment opportunities that empower individuals and businesses to achieve their financial goals.</p> <br>
+
+<h3><b>Our Mission</b></h3>
+<p style="line-height: 20px;">Our mission is to make finance accessible, straightforward, and beneficial for all our clients. Whether you're looking to secure a loan for personal needs, expand your business, or invest in promising ventures, we are here to guide you every step of the way.</p> <br>
+
+<img src="{% static 'pe.png' %}" style="width:70%; height:300px;"><br>
+<h3><b>Our Services</b></h3>
+<p style="line-height: 20px;"><b>Loan Solutions:</b> We offer a wide range of loan products, including personal loans, business loans, mortgage loans, and more. Our flexible terms and competitive interest rates ensure you get the financial support you need without the hassle.</p><br>
+
+<p style="line-height: 20px;"><b>Investment Opportunities:</b> From traditional investments to innovative financial products, we provide access to a diverse portfolio designed to maximize your returns. Our expert advisors work closely with you to identify the best investment strategies based on your financial objectives and risk tolerance.</p><br>
+
+<h3><b>Why Choose Us?</b></h3>
+<p style="line-height: 20px;"><b>Expertise:</b> Our team comprises seasoned financial professionals with extensive experience in lending and investment management.</p><br>
+
+<p style="line-height: 20px;"><b>Customer-Centric Approach:</b> We prioritize your needs and tailor our services to meet your unique financial situation.</p><br>
+
+<p style="line-height: 20px;"><b>Transparency:</b> We believe in clear, honest communication. You'll always know your options, the associated costs, and the potential benefits.</p><br>
+
+<p style="line-height: 20px;"><b>Innovation:</b> We continuously seek out the latest financial technologies and market trends to provide you with cutting-edge solutions.</p><br>
+
+
+<h3><b>Our Commitment</b></h3>
+<p style="line-height: 20px;">At Wilder Grants & Investment, we are committed to your financial success. We strive to build lasting relationships with our clients, based on trust, integrity, and exceptional service. Our goal is to help you navigate the complexities of finance with confidence and ease.</p><br>
+
+<p style="line-height: 20px;">Join us on your journey to financial prosperity. Contact us today to learn more about how Wilder Grants & Investment can support your grants and investment needs.</p>
+
+[Contact Information]
+
+Wilder Grants & Investment - Empowering Your Financial Future.
+    </div>
+</section>
+
+<!-- footer section -->
+<footer class="footer">
+	<div class="footer-text">
+		<p>Creating an environment for the rich and poor</p>
+	</div>
+
+	<div class="footer-IconTop">
+		<a href="#home"><i class="fa-solid fa-angle-up"></i></a>
+	</div>
+	
+</footer>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript">
+	let menuIcon  = document.querySelector("#menu-icon");
+	let navbar  = document.querySelector(".navbar");
+
+	menuIcon.onclick = () => {
+		menuIcon.classList.toggle("fa-xmark")
+		navbar.classList.toggle('active')
+	}
+
+	let sections = document.querySelectorAll('section');
+	let navLinks = document.querySelectorAll('header nav a');
+
+	window.onscroll = () =>{
+		sections.forEach(sec=>{
+			let top = window.scrollv;
+			let offset = secoffsetTop = 150
+			let height = sec.offsetHeight;
+			let id = sec.getAttribute('id')
+
+			if(top >= offset && top < offset + height){
+				navLinks.forEach.apply(links =>{
+					links.classList.remove("active");
+					document.querySelector("header nav a(href*="+ id + ")").classList.add('active')
+				});
+			};
+		});
+
+
+
+		let header = document.querySelector('header');
+		header.classList.toggle('sticky', window.scrollv > 100);
+
+
+		menuIcon.classList.remove('fa-xmark');
+		navbar.classList.remove('active');
+	}
+
+    setTimeout(fade_out, 2000)
+      function fade_out(){
+        $(".alert").fadeOut().empty()
+      };
+</script>
+</body>
+
+</html>

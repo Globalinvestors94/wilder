@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wilder Loans & Investment</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
+</head>
+
+<body>
+<!-- Header section -->
+<header class="header">
+	<a href="#" class="logo"><i class="fa fa-bank"></i> Wilder Grants & Investment</a>
+	<i class="fas fa-bars" id="menu-icon"></i>
+	<nav class="navbar">
+		<a href="#home" class="active">Home</a>
+		<a href="#about">Abous Us</a>
+		<a href="#loans">Loans</a>
+		<a href="#investment">Investment</a>
+		<a href="#testimonies">Testimonies</a>
+		<a href="#contact">Contact Us</a>
+	</nav>
+	
+</header>
+<!-- Header section ends -->
+
+<!-- home section -->
+<section class="home" id=home>
+	<div class="home-content">
+		<h1>Wilder</h1>
+		<h1>Loans and Investment</h1>
+		<p>Creating an environment for the rich and poor</p><br>
+	
+	{% if request.user.is_authenticated %}
+	<div class="">
+		<div><a href="#" style="color:white; font-size:1.5rem"> Welcome {{request.user.first_name}} {{request.user.last_name}}</a></div><br>
+		<a href="{% url 'work:logout' %}" class="btn"> Logout</a>
+		
+		</div>
+		
+
+		{% else %}
+		<div class="loginRegister">
+		<a href="{% url 'work:register' %}" class="btn"> Register</a>
+		<a href="{% url 'work:login' %}" class="btn">Login</a>
+		</div>
+		{% endif %}
+	
+	
+
+	<div class="social-media">
+		<a href="#"> <i class="fab fa-facebook-f"></i></a>
+		<a href="#"> <i class="fab fa-twitter"></i></a>
+		<a href="#"> <i class="fab fa-instagram"></i></a>
+	</div>
+	</div>
+
+	<div class="home-img">
+		<img src="{% static 'customer.png' %}">
+	</div>
+</section>
+<!-- home section ends -->
+
+
+<!-- about section -->
+<section class="about" id="about">
+	<div class="about-img">
+		<img src="{% static 'pu.png' %}">
+	</div>
+
+	<div class="about-content">
+		<h2 class="heading">About Wilder Loans & Investment</h2>
+		<h2>Creating an environment for the rich and poor</h2>
+		<p>Welcome to Wilder Loans & Investment, your trusted partner in financial growth and stability. At Wilder Loans & Investment, we specialize in providing tailored grants solutions and investment opportunities that empower individuals and businesses to achieve their financial goals.</p>
+		<a href="{% url 'work:about' %}" class="btn">Read More</a>
+	</div>
+</section>
+<!-- about section -->
+
+<!-- loans section -->
+<section class="loans" id="loans">
+	<h2 class="heading">Choose your type of loan</h2>
+	<div class="loans-container">
+		<div class="loans-box">
+			<i class="fas fa-industry"></i>
+			<h3>Agricultural Loan</h3>
+			<p>Agriculture remains the backbone of our economy, providing food, employment, and income for millions. However, many farmers face challenges such as limited access to resources, outdated farming techniques, and the impacts of climate change. The Sustainable Agricultural Development Initiative aims to address these issues by providing grants to support innovative, sustainable farming practices.
+</p>
+			<a href="{% url 'work:agric' %}" class="btn">Choose Plan</a>
+		</div>
+
+		<div class="loans-box">
+			<i class="fas fa-briefcase"></i>
+			<h3>Business Loan</h3>
+			<p>Small and medium-sized enterprises (SMEs) are crucial to economic development, job creation, and innovation. However, many businesses face significant barriers to growth, such as limited access to capital, technology, and expertise. The Innovative Business Growth and Sustainability Program aims to address these challenges by providing grants to support the expansion and sustainability of SMEs.</p>
+			<a href="{% url 'work:business' %}" class="btn">Choose Plan</a>
+		</div>
+
+
+
+		<div class="loans-box">
+			<i class="fas fa-fax"></i>
+			<h3>Housing/Assest Loan</h3>
+			<p>Access to affordable housing and essential community assets is vital for the well-being and economic stability of individuals and families. However, many communities face a shortage of affordable housing and lack critical infrastructure and resources. The Affordable Housing and Community Assets Development Program aims to address these issues by providing grants to support the development of affordable housing and community assets.</p>
+			<a href="{% url 'work:business' %}" class="btn">Choose Plan</a>
+		</div>
+	</div>
+	
+</section>
+<!-- loans section ends -->
+
+
+
+
+
+<!-- investment section -->
+<section class="loans" id="investment">
+	<h2 class="heading">Choose Investment Plan</h2>
+	<div class="loans-container">
+		<div class="loans-box">
+			<i class="fas fa-anchor"></i>
+			<h3>Beginners Plan</h3>
+			<p>Investing can be a powerful way to grow your wealth and secure your financial future. However, as a beginner, navigating the world of investments can be daunting. The Beginner Investment Plan is designed to provide a straightforward, step-by-step approach to help you start investing with confidence and build a solid foundation for your financial journey</p>
+			<a href="{% url 'work:begin' %}" class="btn">Choose Plan</a>
+		</div>
+
+		<div class="loans-box">
+			<i class="fas fa-bell"></i>
+			<h3>Promo Plan</h3>
+			<p>Our Promotional Investment Plan is designed to help you take the first step towards financial growth with ease and confidence. We offer a tailored approach to investing that suits beginners and experienced investors alike, providing you with the tools and support needed to achieve your financial goals.</p>
+			<a href="{% url 'work:promo' %}" class="btn">Choose Plan</a>
+		</div>
+
+
+
+		<div class="loans-box">
+			<i class="fas fa-archive"></i>
+			<h3>Finale Plan</h3>
+			<p>The Finale Investment Plan is your gateway to achieving financial independence and long-term wealth accumulation. Designed for both novice and seasoned investors, this plan offers a comprehensive, guided approach to making smart investment decisions. With expert advice, a diversified portfolio, and exclusive promotional benefits, we make investing straightforward and rewarding.</p>
+			<a href="{% url 'work:finale' %}" class="btn">Choose Plan</a>
+		</div>
+	</div>
+	
+</section>
+<!-- investment section ends -->
+
+<!-- testimonies section -->
+<section class="testimonies" id="testimonies">
+	<img src="{% static 'certificate.png' %}" style="width:100%">
+	<h2 class="heading">Users Review</h2>
+
+	<div class="testimonies-container">
+		<div class="testimonies-box">
+			<img src="{% static 'Ralilia Afrom.png' %}">
+			<div class="testimonies-layer">
+				<h4>Ralilia Afrom</h4>
+				<p>This is so so incredible, i requested for a loan for my agriculture business, my loan was approved with a team of expert to provide me professional advice where needed.</p>
+			</div>
+		</div>
+
+
+		<div class="testimonies-box">
+			<img src="{% static 'Ahmed Batrus.png' %}">
+			<div class="testimonies-layer">
+				<h4>Ahmed Batrus</h4>
+				<p>This is so so incredible, i requested for a loan for my agriculture business, my loan was approved with a team of expert to provide me professional advice where needed.</p>
+			</div>
+		</div>
+
+
+
+		<div class="testimonies-box">
+			<img src="{% static 'Muhammed Hamza.png' %}">
+			<div class="testimonies-layer">
+				<h4>Muhammed Hamza</h4>
+				<p>This is so so incredible, i requested for a loan for my agriculture business, my loan was approved with a team of expert to provide me professional advice where needed.</p>
+			</div>
+		</div>
+
+
+
+		<div class="testimonies-box">
+			<img src="{% static 'Andrellia.png' %}">
+			<div class="testimonies-layer">
+				<h4>Andrellia Halsen</h4>
+				<p>This is so so incredible, i requested for a loan for my agriculture business, my loan was approved with a team of expert to provide me professional advice where needed.</p>
+			</div>
+		</div>
+
+
+		<div class="testimonies-box">
+			<img src="{% static 'Georgia.png' %}">
+			<div class="testimonies-layer">
+				<h4>Georgia Stephens</h4>
+				<p>This is so so incredible, i requested for a loan for my agriculture business, my loan was approved with a team of expert to provide me professional advice where needed.</p>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- testimonies section ends -->
+
+<!-- contact section ends -->
+<section class="contact" id="contact">
+	<h2 class="heading">Contact Us</h2>
+	<form action="#">
+		{% csrf_token %}
+		<div class="input-box">
+			{{form.first_name}}
+			{{form.last_name}}
+			<!-- <input type="text" placeholder="Full Name"> -->
+			<!-- <input type="email" placeholder="Valid Email Address"> -->
+		</div>
+
+
+		<div class="input-box">
+			{{form.phone}}
+			{{form.email}}
+			<!-- <input type="number" placeholder="Phone Number">
+			<input type="text" placeholder="Full Name"> -->
+		</div>
+
+			{{form.message}}
+		<!-- <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea> -->
+		<input type="submit" name="" value="Send Message" class="btn">
+	</form>
+</section>
+<!-- contact section ends -->
+
+
+<!-- footer section -->
+<footer class="footer">
+	<div class="footer-text">
+		<p>Creating an environment for the rich and poor</p>
+	</div>
+
+	<div class="footer-IconTop">
+		<a href="#home"><i class="fa-solid fa-angle-up"></i></a>
+	</div>
+	
+</footer>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript">
+	let menuIcon  = document.querySelector("#menu-icon");
+	let navbar  = document.querySelector(".navbar");
+
+	menuIcon.onclick = () => {
+		menuIcon.classList.toggle("fa-xmark")
+		navbar.classList.toggle('active')
+	}
+
+	let sections = document.querySelectorAll('section');
+	let navLinks = document.querySelectorAll('header nav a');
+
+	window.onscroll = () =>{
+		sections.forEach(sec=>{
+			let top = window.scrollv;
+			let offset = secoffsetTop = 150
+			let height = sec.offsetHeight;
+			let id = sec.getAttribute('id')
+
+			if(top >= offset && top < offset + height){
+				navLinks.forEach.apply(links =>{
+					links.classList.remove("active");
+					document.querySelector("header nav a(href*="+ id + ")").classList.add('active')
+				});
+			};
+		});
+
+
+
+		let header = document.querySelector('header');
+		header.classList.toggle('sticky', window.scrollv > 100);
+
+
+		menuIcon.classList.remove('fa-xmark');
+		navbar.classList.remove('active');
+	}
+
+	setTimeout(fade_out, 2000)
+      function fade_out(){
+        $(".alert").fadeOut().empty()
+      };
+
+      $("#id_first_name").attr("placeholder", "Your First Name..");
+      $("#id_last_name").attr("placeholder", "Your Last Name..");
+      $("#id_phone").attr("placeholder", "Input your phone number..");
+      $("#id_email").attr("placeholder", "Your valid email address..");
+	$("#id_message").attr("placeholder", "Type in your email message..");
+</script>
+</body>
+
+</html>

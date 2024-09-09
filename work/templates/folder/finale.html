@@ -1,0 +1,285 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wilder Loans & Investment</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
+
+<style>
+
+	:root{
+		--table-color:black;
+		--bg-color:#192f36;
+}
+
+	section {
+       	font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        min-height: 30vh;
+		padding: 10rem 9% 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+    .show_alert{
+    	min-height: 30vh;
+    }
+
+
+
+        #id_status{
+        	display: none;
+        }
+
+	table { 
+		width: 80%; 
+		border-collapse: collapse;
+		box-shadow: 0 0 3rem black; 
+} 
+
+th, td { 
+	padding: 8px; 
+	border: 1px solid #ddd; 
+} 
+
+@media screen and (max-width: 600px) { 
+table, thead, tbody, th, td, tr { 
+	display: block; 
+	border: 1px solid blue;
+} 
+
+thead tr { 
+	position: absolute; 
+	top: -9999px; 
+	left: -9999px; 
+} 
+
+tr { 
+	margin-bottom: 20px; 
+	border: 1px solid #ddd; 
+} 
+
+td { 
+	border: none; 
+	position: relative; 
+	padding-left: 50%; 
+} 
+
+td:before { 
+	position: absolute; 
+	left: 6px; 
+	content: attr(data-label); 
+	font-weight: bold; } 
+
+} 
+
+.float-container{
+	border: 1px solid red;
+	padding: 10px;
+	width: 70%;
+	box-shadow: 0 0 3rem black;
+}
+
+.float-child{
+	width: 50%;
+	float: left;
+	padding: 10px;
+	border: 1px solid black;
+	font-size: 1.3rem;
+	color: black;
+}
+
+#id_amount{
+    width: 120px;
+    background-color: #f4f4f4;
+}
+
+#id_coin{
+    width: 120px;
+    background-color: #f4f4f4;
+}
+
+</style>
+</head>
+
+<body>
+<!-- Header section -->
+<header class="header">
+	<a href="#" class="logo"><i class="fa fa-bank"></i> Wiilder Grant & Investment</a>
+</header>
+
+<section class="show_alert">
+	{% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{message.tag}}" style="width:100%;">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+</section>
+
+<section>
+        
+<div class="float-container">
+	{% if request.user.is_authenticated %}
+		<div class="float-child">
+			<div class="green">Plan</div>
+		</div>
+
+		<div class="float-child">
+			<div class="green">Finale Plan</div>
+		</div>
+
+
+		<div class="float-child">
+			<div class="green">User</div>
+		</div>
+
+		<div class="float-child">
+			<div class="green">{{request.user.username}}</div>
+		</div>
+
+
+
+		<div class="float-child">
+			<form method="POST" action="">
+              {% csrf_token %}
+              {{form.errors}}
+			<div class="green">Investment Amount</div>
+		</div>
+
+		<div class="float-child">
+			<div class="green">$ {{form.amount}}</div>
+		</div>
+
+		<div class="float-child" style="display: none;">
+			<div class="green">Status</div>
+		</div>
+
+		<div class="float-child" style="display: none;">
+			<div class="green">{{form.status}}</div>
+		</div>   
+        <input type="submit" value="Invest" class="btn" onclick="submitTxt()" style="float: right; margin: 10px; cursor: pointer;">
+          </form>
+
+
+{% endif %}
+	</div>
+	</section>
+
+
+<section>
+
+		<table> 
+			{% if request.user.is_authenticated %}
+			<thead style="color: white; background: blue; font-weight: 700; font-size: 1.5rem;"> 
+				<tr> 
+					<th>Plan</th> 
+					<th>User</th> 
+					<th>Amount</th> 
+					<th>Reward</th> 
+					<th>Status</th>
+				</tr> 
+			</thead> 
+
+			{% for fin in fin %}
+			<tbody style="color: black; font-size: 1.5rem;"> 
+				<tr> 
+					<td data-label="Plan">FInale Plan</td> 
+					<td data-label="User">{{request.user.username}}</td> 
+					<td data-label="Amount">{{fin.amount}}</td> 
+					<td data-label="Reward">{{fin.finale_amount}}</td> 
+					<td data-label="Status">{{fin.status}}</td>
+				</tr> 
+				<!-- more table rows here --> 
+			</tbody> 
+			{% endfor %}
+			{% endif %}
+		</table> 
+
+</section>
+
+<!-- footer section -->
+<footer class="footer">
+	<div class="footer-text">
+		<p>Creating an environment for the rich and poor</p>
+	</div>
+
+	<div class="footer-IconTop">
+		<a href="#home"><i class="fa-solid fa-angle-up"></i></a>
+	</div>
+	
+</footer>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript">
+
+	setTimeout(fade_out, 2000)
+      function fade_out(){
+        $(".alert").fadeOut().empty()
+      };
+
+
+	let menuIcon  = document.querySelector("#menu-icon");
+	let navbar  = document.querySelector(".navbar");
+
+	menuIcon.onclick = () => {
+		menuIcon.classList.toggle("fa-xmark")
+		navbar.classList.toggle('active')
+	}
+
+	let sections = document.querySelectorAll('section');
+	let navLinks = document.querySelectorAll('header nav a');
+
+	window.onscroll = () =>{
+		sections.forEach(sec=>{
+			let top = window.scrollv;
+			let offset = secoffsetTop = 150
+			let height = sec.offsetHeight;
+			let id = sec.getAttribute('id')
+
+			if(top >= offset && top < offset + height){
+				navLinks.forEach.apply(links =>{
+					links.classList.remove("active");
+					document.querySelector("header nav a(href*="+ id + ")").classList.add('active')
+				});
+			};
+		});
+
+
+
+		let header = document.querySelector('header');
+		header.classList.toggle('sticky', window.scrollv > 100);
+
+
+		menuIcon.classList.remove('fa-xmark');
+		navbar.classList.remove('active');
+	}
+
+	
+  $("#id_amount").attr("placeholder", "Input your amount..");
+$("#id_address").attr("placeholder", "Type in your wallet address)..");
+
+$(".withdrawMoney #id_amount").attr("placeholder", "Input your amount..");
+
+$(document).ready(function(){
+        $('#copy-icon').click(function(){
+            var TexttoCopy = $('#copy-text').text();
+            var TeztArea = $('<textarea>');
+            $('body').append(TeztArea);
+            TeztArea.val(TexttoCopy).select();
+
+            document.execCommand('copy')
+            TeztArea.remove()
+            
+            alert('Your referal links is copied');
+        
+        });
+        });
+</script>
+</body>
+
+</html>

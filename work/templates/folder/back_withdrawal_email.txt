@@ -1,0 +1,6 @@
+{{subject}}
+
+Hello, {{user}}
+
+
+    You have requested to make a withdrawal of {{amount}} worth of {{coin}}, which is currently {{status}}.. Congratulations!!!"""

@@ -1,0 +1,8 @@
+{{subject}}
+
+Hello, {{user}}
+
+
+    You have requested a grant of {{amount}}, with a business plan as follows..
+
+    {{message}}<br> We will notify you if the grant will be approved to you

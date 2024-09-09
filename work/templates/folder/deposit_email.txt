@@ -1,0 +1,6 @@
+{{subject}}
+
+Hello, {{user}}
+
+
+    You have made a deposit of {{amount}} worth of {{coin}}, which is currently {{status}}, but will be attended to it shortly, and be updated on your dashboard.. Thanks!!!

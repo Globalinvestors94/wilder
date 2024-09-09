@@ -1,0 +1,6 @@
+{{subject}}
+
+Hello, {{user}}
+
+
+    {{user}}, you have requested to make a withdrawal of {{amount}} worth of {{coin}}, which is currently {{status}}, but will be attended to shortly.. Thanks!!!

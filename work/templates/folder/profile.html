@@ -1,0 +1,875 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wilder Loans & Investment</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
+
+<style>
+
+	section {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        min-height: 50vh;
+        padding: 10rem 9% 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+    .dashboard{
+        min-height: 80vh;
+        padding: 10rem 10% 22rem;
+    }
+
+	.form-container {
+           background: #fff;
+           padding: 20px;
+           border-radius: 10px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           width: 100%;
+           max-width: 500px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+
+        #id_status{
+        	display: none;
+        }
+
+        table { 
+        width: 80%; 
+        border-collapse: collapse;
+        box-shadow: 0 0 3rem black; 
+} 
+
+th, td { 
+    padding: 8px; 
+    border: 1px solid #ddd; 
+} 
+
+@media screen and (max-width: 600px) { 
+table, thead, tbody, th, td, tr { 
+    display: block; 
+    border: 1px solid blue;
+} 
+
+thead tr { 
+    position: absolute; 
+    top: -9999px; 
+    left: -9999px; 
+} 
+
+tr { 
+    margin-bottom: 20px; 
+    border: 1px solid #ddd; 
+} 
+
+td { 
+    border: none; 
+    position: relative; 
+    padding-left: 50%; 
+} 
+
+td:before { 
+    position: absolute; 
+    left: 6px; 
+    content: attr(data-label); 
+    font-weight: bold; } 
+
+} 
+
+.float-container{
+    border: 1px solid red;
+    padding: 10px;
+    width: 70%;
+    box-shadow: 0 0 3rem black;
+}
+
+.float-child{
+    width: 50%;
+    float: left;
+    padding: 10px;
+    border: 1px solid black;
+    font-size: 1.3rem;
+    color: black;
+}
+
+.deposit{
+    min-height: 20vh
+}
+
+.home h2{
+    font-size: 2rem;
+}
+
+.box-invest{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 8px;
+    display: inline-block;
+
+    }
+
+    img{
+        width: 80%;
+        height: 89%;
+        border-radius: 10px;
+    }
+
+.box-invest h3{
+    color: black;
+}
+
+.row:after{
+content:"";
+display:table;
+clear:both;
+}
+
+/* The bar container */
+.bar-container{
+width:100%;
+background-color:#f1f1f1;
+text-align:center;
+color:white;
+}
+
+/* Individual bars */
+.bar-5{
+width:60%;
+height:18px;
+background-color:
+#04AA6D;}
+
+.bar-4{
+width:30%;
+height:18px;
+background-color:#2196F3;}
+
+.bar-3{
+width:10%;
+height:18px;
+background-color:#00bcd4;}
+
+.bar-2{
+width:4%;
+height:18px;
+background-color:#ff9800;}
+
+.bar-1{
+width:15%;
+height:18px;
+background-color:#f44336;}
+
+#id_amount{
+    width: 120px;
+    background-color: #f4f4f4;
+}
+
+#id_coin{
+    width: 120px;
+    background-color: #f4f4f4;
+}
+
+#id_address{
+    width: 120px;
+    background-color: #f4f4f4;
+}
+</style>
+</head>
+
+<body>
+<!-- Header section -->
+<header class="header">
+	<a href="#" class="logo"><i class="fa fa-bank"></i> Wilder Grant & Investment</a>
+	
+	<i class="fas fa-bars" id="menu-icon"></i>
+    <nav class="navbar">
+        <a href="#dashboard" class="active">Dashboard</a>
+        <a href="#deposit">Deposit</a>
+        <a href="#invest">Invest</a>
+        <a href="#withdraw">Withdraw</a>
+        <a href="#profile">Profile</a>
+        
+    </nav>
+    {% if request.user.is_authenticated %}
+     <p>Welcome: {{request.user.username}} ->  <a href="{% url 'work:logout' %}" style="color:white;">Logout</a></p>
+     {% endif %}
+</header>
+
+<section class="dashboard" id="dashboard">
+    {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{message.tag}}">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+
+    <div class="money_container" style="width:100%">
+        <h2 class="heading" style="color:black; font-weight:600;">User Dashboard</h2>
+        {% if beginID or promoID or finaleID %}
+	<div style="color: green; width:100%"><center>
+        <h3 style="font-size:50px;" id="result">$ {{total_invest}} </h3>
+        <i class="fa fa-book"></i><span style="color:black;"> Account Balance</span></center>
+        </div> <br><br>
+
+        {% else %}
+
+        <div style="color: green; width:100%"><center>
+        <h3 style="font-size:50px;" id="result">$ {{after}} </h3>
+        <i class="fa fa-book"></i><span style="color:black;"> Account Balance</span></center>
+        </div> <br><br>
+        {% endif %}
+
+
+        {% if act_invest %}
+        <div style="background:black; border-radius:3px; margin:2px; width:100%">
+        <center> <span style="color:white;"> Active Investment</span> <br>
+            <h3 style="font-size:40px;">$ {{act_invest}} </h3>
+        </center></div><br><br>
+        {% else %}
+
+        <div style="background:black; border-radius:3px; margin:2px; width:100%">
+        <center> <span style="color:white;"> Active Investment</span> <br>
+            <h3 style="font-size:40px;">$ 0.00 </h3>
+        </center></div><br><br>
+        {% endif %}
+
+        {% if beginID or proID or promoID or repID or finaleID %}
+        <div class="activeInv" style="background:black; border-radius:3px; margin:2px;">
+        <center> <span style="color:white;"> Earnings</span> <br>
+            <h3 style="font-size:40px;" id="result">$ 0.00  </h3>
+        </center>
+    </div><br><br>
+
+    {% else %}
+
+    <div class="activeInv" style="background:black; border-radius:3px; margin:2px;">
+        <center> <span style="color:white;"> Earnings</span> <br>
+            <h3 style="font-size:40px;" id="result">$ {{resultM}}  </h3>
+        </center>
+    </div><br><br>
+    {% endif %}
+
+
+    {% if withdrawal %}
+    <div class="activeInv" style="background:black; border-radius:3px; margin:2px;">
+        <center> <span style="color:white;"> Withdrawal</span> <br>
+            <h3 style="font-size:40px;">$ {{withdrawal}} </h3>
+        </center>
+        
+    </div> <br><br>
+
+    {% else %}
+
+    <div class="activeInv" style="background:black; border-radius:3px; margin:2px;">
+        <center> <span style="color:white;"> Withdrawal</span> <br>
+            <h3 style="font-size:40px;">$ 0.00 </h3>
+        </center>
+        
+    </div> <br><br>
+    {% endif %}
+
+    <div style="padding:0.8rem; border-radius:4px; border:.1rem solid; font-size: 1.6rem; margin: 0 1rem;">
+        <h2 style="color: black;">Where We Invest</h2></div>
+
+                <div class="popup" id="popup-invest">
+                   
+                <i style="color:white;" class="fa fa-fire"></i><br>
+                
+        <div class="box-invest">
+        <img src="{% static 'Crytomining.jpg' %}">
+        <h3>Cryto Mining</h3>
+    </div>
+
+    <div class="box-invest">
+        <img src="{% static 'tradi.jpg' %}">
+        <h3>Cryto Trading</h3>
+    </div>
+
+
+    <div class="box-invest">
+        <img src="{% static 'metaclass.jpg' %}">
+        <h3>Meta Class</h3>
+    </div>
+
+    <div class="box-invest">
+        <img src="{% static 'nft.jpg' %}">
+        <h3>Nfts</h3>
+    </div>
+
+    <div class="box-invest">
+        <img src="{% static 'Forexi.jpg' %}">
+        <h3>Forex Trading</h3>
+    </div>
+
+
+    <div class="box-invest">
+        <img src="{% static 'gold.jpg' %}">
+        <h3>Gold</h3>
+    </div>
+
+    <div class="box-invest">
+        <img src="{% static 'estate.jpg' %}">
+        <h3>Estate</h3>
+    </div>
+
+    <div class="box-invest">
+        <img src="{% static 'light.jpg' %}">
+        <h3>Light</h3>
+    </div>
+
+    <div class="box-invest">
+        <img src="{% static 'agric.jpg' %}">
+        <h3>Agriculture</h3>
+    </div> <br><br><br> 
+
+
+
+
+    <div class="content"><h2 style="color:black; font-size:1.5rem"><i class="fa fa-credit-card"></i> My Card</h2><span style="float:right; background:red; padding:0.8rem; border-radius:4px; color: white;"><i class="fas fa-ban"></i> Card Inactive</span></div><br><br>
+<hr>
+
+<div class="card" style="justify-content: center; align-items: center; width:100%;">
+
+    <div class="card-design" style="width:300px; height:200px; background: red; border-radius: 5px;">
+
+        <div class="cardLogo"><br><br>
+            <div class="content">
+                <h2><i class="fa fa-fire" style="color:#12c2b9;"></i> Wilder Investment</h2>
+
+                <span style="float:right; color:white; font-size:3rem; ">
+                <i class="fab fa-cc-mastercard"></i></span></div>
+                <br><br><br><br>
+
+            <center><p style="font-size:3rem; color: white;">**** **** 0000 0000</p></center><br><br><br><br>
+
+            <div class="content">
+                <h2 style="color:white; font-size:1.7rem;"> Card Holder
+
+                    <span style="float:right; color:white; font-size:1.7rem; ">Expires</span></h2></div>
+
+                <div class="content">
+                <h2 style="color:white;"> {{request.user.username}}
+
+                    <span style="float:right; color:white; font-size:1.4rem; ">00/00</span></h2></div>
+
+
+        </div>
+        
+    </div>
+
+    
+</div><br><br><br><br>
+
+<div class="about-card" style="background:black; border-radius:3px; margin:2px; height: 110px;">
+        <h3 style="color:white; font-size:1.8rem; margin: 5px;"><i class="fa fa-envelope"></i> Your Wilder Investment Card is Currently Inactive</h3><br>
+
+
+        <div class="thelinks" style="display:flex; padding:2rem; align-items:center; width: 100%; justify-content: center;">
+
+        <div style="background:white; padding:0.8rem; border-radius:4px; color: #12c2b9; border:.1rem solid #12c2b9; font-size: 1.2rem; margin: 0 1rem;"><i class="fa fa-gear"></i><a href="#" style="color:black;" onclick="smartsupp('chat:open');"> Manage Card >></a></div>
+        
+
+
+    <div style="background:white; padding:0.8rem; border-radius:4px; color: #12c2b9; border:.1rem solid #12c2b9; font-size: 1.2rem; margin: 0 1rem;"><i class="fa fa-edit"></i><a href="#" style="color:black;" onclick="smartsupp('chat:open');"> Link >> </a></div>
+
+</div><br><br><br><br>
+
+
+<div class="content"><h2 style="color:black; font-size:2.2rem"><i class="fa fa-credit-card"></i> Customer Review</h2></div>
+<span style="float:right; background:white; padding:0.8rem; border-radius:4px; color: #CCCC00; border:.1rem solid #EEDC82;">
+    
+    <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+        56,345
+
+        </div>
+
+</span><br><br>
+
+
+
+
+
+<div class="row">
+<div class="side">
+<!-- <div>5 star</div> -->
+</div>
+<div class="middle">
+<div class="bar-container">
+<div class="bar-5"></div>
+</div>
+</div>
+<div class="side right">
+<div>150</div>
+</div>
+<div class="side">
+<!-- <div>4 star</div> -->
+</div>
+<div class="middle">
+<div class="bar-container">
+<div class="bar-4"></div>
+</div>
+</div>
+<div class="side right">
+<div>63</div>
+</div>
+<div class="side">
+<!-- <div>3 star</div> -->
+</div>
+<div class="middle">
+<div class="bar-container">
+<div class="bar-3"></div>
+</div>
+</div>
+<div class="side right">
+<div>15</div>
+</div>
+<div class="side">
+<!-- <div>2 star</div> -->
+</div>
+<div class="middle">
+<div class="bar-container">
+<div class="bar-2"></div>
+</div>
+</div>
+<div class="side right">
+<div>6</div>
+</div>
+<div class="side">
+<!-- <div>1 star</div> -->
+</div>
+<div class="middle">
+<div class="bar-container">
+<div class="bar-1"></div>
+</div>
+</div>
+<div class="side right">
+<div>20</div>
+</div>
+</div>
+
+ <div class="thelinks" style="display:flex; padding:2rem; align-items:center; width: 100%; justify-content: center;">
+
+        <div style="background:white; padding:0.8rem; border-radius:4px; color: #12c2b9; border:.1rem solid #12c2b9; font-size: 1.2rem; margin: 0 1rem;"><a style="color:#12c2b9;" href="#">  <i class="fa fa-gear"></i> View Reviews >></a></div>
+        
+
+
+    <div style="background:white; padding:0.8rem; border-radius:4px; color: #12c2b9; border:.1rem solid #12c2b9; font-size: 1.2rem; margin: 0 1rem;"><a style="color:#12c2b9;" href="#">  <i class="fa fa-edit"></i> Write Reviews >></a></div>
+
+</div>
+    </div>
+
+
+    
+</section>
+
+<section class="deposit" id="deposit">
+    {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{message.tag}}">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+
+    <div class="float-container">
+    <h2 class="heading" style="color:black; font-weight:600;">Deposit</h2>
+    {% if request.user.is_authenticated %}
+        
+            <form method="POST" action="">
+              {% csrf_token %}
+              {{form.errors}}
+              <div class="float-child">
+            <div class="green">Deposit</div>
+        </div>
+
+        <div class="float-child">
+            <div class="green">$ {{form.amount}}</div>
+        </div>
+
+
+        <div class="float-child">
+            <div class="green">Choose Coin</div>
+        </div>
+
+        <div class="float-child">
+            <div class="green">{{form.coin}}</div>
+            </div>
+
+        <div class="float-child" style="display: none;">
+            <div class="green">Status</div>
+        </div>
+
+        <div class="float-child" style="display: none;">
+            <div class="green">{{form.status}}</div>
+        </div> 
+
+{% endif %}
+    
+    <input type="submit" value="Deposit" name="depo" class="btn" onclick="submitTxt()" style="float: right; margin: 10px; cursor: pointer;">
+        
+          </form>
+    </section>
+
+
+<section>
+
+        <table> 
+            {% if request.user.is_authenticated %}
+            <thead style="color: white; background: blue; font-weight: 700; font-size: 1.5rem;"> 
+                <tr>  
+                    <th>User</th> 
+                    <th>Coin</th> 
+                    <th>Amount</th> 
+                    <th>Status</th>
+                </tr> 
+            </thead> 
+
+
+            {% for dep in dep %}
+            <tbody style="color: black; font-size: 1.5rem;"> 
+                <tr> 
+                    <td data-label="User">{{dep.user}}</td> 
+                    <td data-label="Coin">{{dep.coin}}</td> 
+                    <td data-label="Amount">{{dep.amount}}</td> 
+                    <td data-label="Status">{{dep.status}}</td> 
+                </tr> 
+                
+                <!-- more table rows here --> 
+            </tbody>
+            {% endfor %} 
+            {% endif %}
+        </table> 
+
+</section>
+
+          
+<section class="invest" id="invest">
+    {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{message.tag}}">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+    <div><h2 class="heading" style="color:black; font-weight:600;">Investment Plans</h2>
+
+    <div class="loans-container">
+        <div class="loans-box">
+            <i class="fas fa-anchor"></i>
+            <h3>Beginners Plan</h3>
+            <p>Agricultural loan is basically loans offered to potential farmers to start farming and start earning</p>
+            <a href="{% url 'work:begin' %}" class="btn">Choose Plan</a>
+        </div>
+
+        <div class="loans-box">
+            <i class="fas fa-bell"></i>
+            <h3>Promo Plan</h3>
+            <p>Agricultural loan is basically loans offered to potential farmers to start farming and start earning</p>
+            <a href="{% url 'work:promo' %}" class="btn">Choose Plan</a>
+        </div>
+
+
+
+        <div class="loans-box">
+            <i class="fas fa-archive"></i>
+            <h3>Finale Plan</h3>
+            <p>Agricultural loan is basically loans offered to potential farmers to start farming and start earning</p>
+            <a href="{% url 'work:finale' %}" class="btn">Choose Plan</a>
+        </div>
+    </div>
+    </div>
+    
+</section>
+
+
+<section class="withdraw" id="withdraw">
+    {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{message.tag}}">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+    <div class="float-container">
+        <h2 class="heading" style="color:black; font-weight:600;">Withdrawal</h2>
+    {% if request.user.is_authenticated %}
+        
+            <form method="POST" action="">
+              {% csrf_token %}
+              {{form.errors}}
+              <div class="float-child">
+            <div class="green">Withdrawal</div>
+        </div>
+
+        <div class="float-child">
+            <div class="green">$ {{form.amount}}</div>
+        </div>
+
+
+        <div class="float-child">
+            <div class="green">Choose Coin</div>
+        </div>
+
+        <div class="float-child">
+            <div class="green">{{form.coin}}</div>
+            </div>
+
+
+         <div class="float-child">
+            <div class="green">Wallet Address</div>
+        </div>
+
+        <div class="float-child">
+            <div class="green">{{form.address}}</div>
+            </div>
+
+        <div class="float-child" style="display: none;">
+            <div class="green">Status</div>
+        </div>
+
+        <div class="float-child" style="display: none;">
+            <div class="green">{{form.status}}</div>
+        </div> 
+
+{% endif %}
+    
+    <input type="submit" value="Withdraw" name="withi" class="btn" onclick="submitTxt()" style="float: right; margin: 10px; cursor: pointer;">
+        
+          </form>
+</section>
+
+<section>
+        <table> 
+            {% if request.user.is_authenticated %}
+            <thead style="color: white; background: blue; font-weight: 700; font-size: 1.5rem;"> 
+                <tr>  
+                    <th>User</th> 
+                    <th>Coin</th> 
+                    <th>Amount</th>
+                    <th>Wallet Addr.</th> 
+                    <th>Status</th>
+                </tr> 
+            </thead> 
+
+
+            {% for witdraw in witdraw %}
+            <tbody style="color: black; font-size: 1.5rem;"> 
+                <tr> 
+                    <td data-label="User">{{witdraw.user}}</td> 
+                    <td data-label="Coin">{{witdraw.coin}}</td> 
+                    <td data-label="Amount">{{witdraw.amount}}</td>
+                    <td data-label="Wallet Addr.">{{witdraw.address}}</td> 
+                    <td data-label="Status">{{witdraw.status}}</td> 
+                </tr> 
+                
+                <!-- more table rows here --> 
+            </tbody>
+            {% endfor %} 
+            {% endif %}
+        </table> 
+
+</section>
+
+
+
+<section class="profile" id="profile">
+    {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{message.tag}}">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+
+    <div class="float-container">
+        <h2 class="heading" style="color:black; font-weight:600;">User Profile</h2>
+    {% if request.user.is_authenticated %}
+    <div class="float-child">
+        <div class="green">Username</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">{{request.user.username}}</div>
+    </div>
+
+
+    <div class="float-child">
+        <div class="green">First Name</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">{{request.user.first_name}}</div>
+    </div>
+
+
+    <div class="float-child">
+        <div class="green">Last Name</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">{{request.user.last_name}}</div>
+    </div>
+
+
+    <div class="float-child">
+        <div class="green">Email Address</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">{{request.user.email}}</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">Approved Deposits</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">$ {{depo}}</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">Approved Withdrawals</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">$ {{withdrawal}}</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">Total Investment</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">$ {{all_invest}}</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green">Referral Code</div>
+    </div>
+
+    <div class="float-child">
+        <div class="green" id="copy-text">127.0.0.1:8000/{{profile.code}} <i class="fa fa-copy" id="copy-icon" style=" font-size:1.5rem; cursor:pointer; color: green;"></i></div>
+    </div>
+    {% endif %}
+
+    </div>
+</section>
+
+
+
+
+
+<!-- footer section -->
+<footer class="footer">
+	<div class="footer-text">
+		<p>Creating an environment for the rich and poor</p>
+	</div>
+
+	<div class="footer-IconTop">
+		<a href="#dashboard"><i class="fa-solid fa-angle-up"></i></a>
+	</div>
+	
+</footer>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript">
+	let menuIcon  = document.querySelector("#menu-icon");
+	let navbar  = document.querySelector(".navbar");
+
+	menuIcon.onclick = () => {
+		menuIcon.classList.toggle("fa-xmark")
+		navbar.classList.toggle('active')
+	}
+
+	let sections = document.querySelectorAll('section');
+	let navLinks = document.querySelectorAll('header nav a');
+
+	window.onscroll = () =>{
+		sections.forEach(sec=>{
+			let top = window.scrollv;
+			let offset = secoffsetTop = 150
+			let height = sec.offsetHeight;
+			let id = sec.getAttribute('id')
+
+			if(top >= offset && top < offset + height){
+				navLinks.forEach.apply(links =>{
+					links.classList.remove("active");
+					document.querySelector("header nav a(href*="+ id + ")").classList.add('active')
+				});
+			};
+		});
+
+
+
+		let header = document.querySelector('header');
+		header.classList.toggle('sticky', window.scrollv > 100);
+
+
+		menuIcon.classList.remove('fa-xmark');
+		navbar.classList.remove('active');
+	}
+
+setTimeout(fade_out, 2000)
+      function fade_out(){
+        $(".alert").fadeOut().empty()
+      };
+
+
+$("#id_amount").attr("placeholder", "Input your amount..");
+$("#id_address").attr("placeholder", "Type in your wallet address)..");
+
+$(".withdrawMoney #id_amount").attr("placeholder", "Input your amount..");
+
+$(document).ready(function(){
+        $('#copy-icon').click(function(){
+            var TexttoCopy = $('#copy-text').text();
+            var TeztArea = $('<textarea>');
+            $('body').append(TeztArea);
+            TeztArea.val(TexttoCopy).select();
+
+            document.execCommand('copy')
+            TeztArea.remove()
+            
+            alert('Your referal links is copied');
+        
+        });
+        });
+
+      
+</script>
+</body>
+
+</html>

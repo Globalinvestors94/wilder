@@ -1,0 +1,6 @@
+{{subject}}
+
+Hello, {{user}}
+
+
+    {{amount}} has been recieved from {{user}} and it is been {{status}}.. we will get back to you shortly
